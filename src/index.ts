@@ -16,6 +16,22 @@ export const run = async () => {
   if (!context.payload.pull_request)
     return console.log("No pull request found");
 
+    const owner = context.repo.owner;
+    const repo = context.repo.repo;
+    const branch = context.ref.replace('refs/heads/', '');
+
+
+    const { data: pulls } = await octokit.rest.pulls.list({
+        owner,
+        repo,
+        head: `${owner}:${branch}`,
+        state: 'open'
+    });
+
+    if (pulls.length > 0) {
+        return console.log(`There are ${pulls.length} open PRs for branch ${branch}`);
+    }
+
   const pullRequest = (context as any).payload
     .pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest;
   const branchName = pullRequest.head.ref;

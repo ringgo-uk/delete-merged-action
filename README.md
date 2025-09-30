@@ -4,7 +4,6 @@ GitHub Action to automatically delete merged branches, with a highly configurabl
 
 [![Build CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Build%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Build+CI%22)
 [![Test CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Test%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Test+CI%22)
-[![Release CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Release%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Release+CI%22)
 [![Node CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Node%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Node+CI%22)
 
 ## ⚙️ Usage

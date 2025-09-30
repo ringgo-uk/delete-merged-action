@@ -2,10 +2,10 @@
 
 GitHub Action to automatically delete merged branches, with a highly configurable `branches` option.
 
-[![Build CI](https://github.com/koj-co/delete-merged-action/workflows/Build%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Build+CI%22)
-[![Test CI](https://github.com/koj-co/delete-merged-action/workflows/Test%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Test+CI%22)
-[![Release CI](https://github.com/koj-co/delete-merged-action/workflows/Release%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Release+CI%22)
-[![Node CI](https://github.com/koj-co/delete-merged-action/workflows/Node%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Node+CI%22)
+[![Build CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Build%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Build+CI%22)
+[![Test CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Test%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Test+CI%22)
+[![Release CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Release%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Release+CI%22)
+[![Node CI](https://github.com/ringgo-uk/delete-merged-action/workflows/Node%20CI/badge.svg)](https://github.com/ringgo-uk/delete-merged-action/actions?query=workflow%3A%22Node+CI%22)
 
 ## ⚙️ Usage
 
@@ -15,7 +15,7 @@ You might not need this action, because GitHub natively supports deleting merged
 
 #### `branches`
 
-Glob rules for names of branches to delete, defaults to `!master, !main, *`
+Glob rules for names of branches to delete, defaults to `!master, !develop`
 
 ### Environment variables
 
@@ -36,18 +36,19 @@ on:
       - reopened
 jobs:
   automerge:
-    runs-on: ubuntu-latest
+    runs-on: generic-s
     steps:
       - name: Delete merged branch
-        uses: koj-co/delete-merged-action@master
+        uses: ringgo_uk/delete-merged-action@master
         with:
-          branches: "!master, !production, *"
+          branches: "!master, !develop"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
 ## 📄 License
 
+Forked from
 - Code: [MIT](./LICENSE) © [Koj](https://koj.co)
 - "GitHub" is a trademark of GitHub, Inc.
 
@@ -57,5 +58,5 @@ jobs:
   </a>
 </p>
 <p align="center">
-  <sub>An open source project by <a href="https://koj.co">Koj</a>. <br> <a href="https://koj.co">Furnish your home in style, for as low as CHF175/month →</a></sub>
+  <sub>An open source project by <a href="https://koj.co">Koj</a>. <br> </sub>
 </p>

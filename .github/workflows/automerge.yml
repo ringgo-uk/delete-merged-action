@@ -28,7 +28,7 @@ jobs:
           UPDATE_LABELS: "merge"
           UPDATE_METHOD: "merge"
       - name: Delete merged branch
-        uses: koj-co/delete-merged-action@master
+        uses: ringgo-uk/delete-merged-action@master
         with:
           branches: "!master, !production, *"
         env:

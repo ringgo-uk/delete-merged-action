@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run release-scheduler
-        uses: koj-co/release-scheduler@master
+        uses: ringgo-uk/release-scheduler@master
         env:
           GH_PAT: ${{ secrets.GH_PAT }}

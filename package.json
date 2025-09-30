@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koj-co/delete-merged-action.git"
+    "url": "git+https://github.com/ringgo-uk/delete-merged-action.git"
   },
   "keywords": [
     "merge",
@@ -24,9 +24,9 @@
   "author": "Anand Chowdhary <mail@anandchowdhary.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/koj-co/delete-merged-action/issues"
+    "url": "https://github.com/ringgo-uk/delete-merged-action/issues"
   },
-  "homepage": "https://github.com/koj-co/delete-merged-action#readme",
+  "homepage": "https://github.com/ringgo-uk/delete-merged-action#readme",
   "devDependencies": {
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^26.0.10",

@@ -15,8 +15,8 @@ const shouldMerge = (branch, rules) => {
     console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
     let shouldMerge = branches.every((rule) => {
-        console.log(branch, rule, minimatch_1.default(branch, rule));
-        return minimatch_1.default(branch, rule);
+        console.log(branch, rule, (0, minimatch_1.default)(branch, rule));
+        return (0, minimatch_1.default)(branch, rule);
     });
     console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;

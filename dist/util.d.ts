@@ -4,4 +4,4 @@ export declare const defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-export declare const shouldMerge: (branch: string, rules?: string | undefined) => boolean;
+export declare const shouldMerge: (branch: string, rules?: string) => boolean;

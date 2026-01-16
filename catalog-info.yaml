@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  # Unique identifier for the service (kebab-case)
+  name: ringgo-uk/delete-merged-action
+  description: RingGo componant - TypeScript
+spec:
+  type: service
+  lifecycle: production
+  # Mandatory: Must match the computed_slug from app.getdx.com
+  owner: dart
+  system: ringgo
+

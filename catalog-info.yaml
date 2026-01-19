@@ -1,9 +1,9 @@
 apiVersion: backstage.io/v1alpha1
-kind: Componant
+kind: Component
 metadata:
   # Unique identifier for the service (kebab-case)
   name: ringgo-uk/delete-merged-action
-  description: RingGo componant - TypeScript
+  description: RingGo component - TypeScript
 spec:
   type: service
   lifecycle: production

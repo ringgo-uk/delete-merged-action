@@ -1,5 +1,5 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: Componant
 metadata:
   # Unique identifier for the service (kebab-case)
   name: ringgo-uk/delete-merged-action

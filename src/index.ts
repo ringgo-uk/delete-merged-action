@@ -13,28 +13,29 @@ export const run = async () => {
   /**
    * This action will only work on `pull_request` events
    */
-  if (!context.payload.pull_request)
-    return console.log("No pull request found");
-
-    const owner = context.repo.owner;
-    const repo = context.repo.repo;
-    const branch = context.ref.replace('refs/heads/', '');
-
-
-    const { data: pulls } = await octokit.rest.pulls.list({
-        owner,
-        repo,
-        head: `${owner}:${branch}`,
-        state: 'open'
-    });
-
-    if (pulls.length > 0) {
-        return console.log(`There are ${pulls.length} open PRs for branch ${branch}`);
-    }
-
   const pullRequest = (context as any).payload
-    .pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest;
+    .pull_request as
+      | EventPayloads.WebhookPayloadPullRequestPullRequest
+      | undefined;
+
+  if (!pullRequest) return console.log("No pull request found");
+
+  const owner = context.repo.owner;
+  const repo = context.repo.repo;
   const branchName = pullRequest.head.ref;
+
+  const { data: pullsForHead } = await octokit.rest.pulls.list({
+    owner,
+    repo,
+    head: `${owner}:${branchName}`,
+    state: "open",
+  });
+
+  if (pullsForHead.length > 0) {
+    return console.log(
+      `There are ${pullsForHead.length} open PR(s) for head branch ${branchName}`
+    );
+  }
 
   console.log("Branches to delete are", getInput("branches"));
   console.log("This branch is", branchName);
@@ -52,6 +53,50 @@ export const run = async () => {
    * Pull request has been merged
    */
   if (pullRequestInfo.data.merged && should) {
+    const retargetBase = (getInput("retarget_base") || "").trim();
+    
+    if (retargetBase) {
+      console.log(
+        `Retargeting any open PRs with base ${branchName} to ${retargetBase}`
+      );
+
+      const { data: pullsForBase } = await octokit.rest.pulls.list({
+        owner,
+        repo,
+        base: branchName,
+        state: "open",
+      });
+
+      for (const pr of pullsForBase) {
+        try {
+          await octokit.rest.pulls.update({
+            owner,
+            repo,
+            pull_number: pr.number,
+            base: retargetBase,
+          });
+          console.log(
+            `Retargeted PR #${pr.number} from base ${branchName} to ${retargetBase}`
+          );
+        } catch (error) {
+          console.log(`Failed to retarget PR #${pr.number}`, error);
+        }
+      }
+
+      const { data: remainingPullsForBase } = await octokit.rest.pulls.list({
+        owner,
+        repo,
+        base: branchName,
+        state: "open",
+      });
+
+      if (remainingPullsForBase.length > 0) {
+        return console.log(
+          `Not deleting because branch ${branchName} is still the base of ${remainingPullsForBase.length} open PR(s)`
+        );
+      }
+    }
+
     console.log("Proceeding to delete branch");
     try {
       await octokit.git.deleteRef({
@@ -69,7 +114,7 @@ export const run = async () => {
 };
 
 run()
-  .then(() => {})
+  .then(() => { })
   .catch((error) => {
     console.error("ERROR", error);
     setFailed(error.message);

@@ -16,6 +16,7 @@ const run = async () => {
     if (!token)
         throw new Error("GitHub token not found");
     const octokit = (0, github_1.getOctokit)(token);
+    const api = (octokit.rest ?? octokit);
     /**
      * This action will only work on `pull_request` events
      */
@@ -26,7 +27,7 @@ const run = async () => {
     const owner = github_1.context.repo.owner;
     const repo = github_1.context.repo.repo;
     const branchName = pullRequest.head.ref;
-    const { data: pullsForHead } = await octokit.rest.pulls.list({
+    const { data: pullsForHead } = await api.pulls.list({
         owner,
         repo,
         head: `${owner}:${branchName}`,
@@ -38,7 +39,7 @@ const run = async () => {
     console.log("Branches to delete are", (0, core_1.getInput)("branches"));
     console.log("This branch is", branchName);
     const should = (0, util_1.shouldMerge)(branchName, (0, core_1.getInput)("branches"));
-    const pullRequestInfo = await octokit.pulls.get({
+    const pullRequestInfo = await api.pulls.get({
         owner: github_1.context.repo.owner,
         repo: github_1.context.repo.repo,
         pull_number: pullRequest.number,
@@ -52,7 +53,7 @@ const run = async () => {
         const retargetBase = ((0, core_1.getInput)("retarget_base") || "").trim();
         if (retargetBase) {
             console.log(`Retargeting any open PRs with base ${branchName} to ${retargetBase}`);
-            const { data: pullsForBase } = await octokit.rest.pulls.list({
+            const { data: pullsForBase } = await api.pulls.list({
                 owner,
                 repo,
                 base: branchName,
@@ -60,7 +61,7 @@ const run = async () => {
             });
             for (const pr of pullsForBase) {
                 try {
-                    await octokit.rest.pulls.update({
+                    await api.pulls.update({
                         owner,
                         repo,
                         pull_number: pr.number,
@@ -72,7 +73,7 @@ const run = async () => {
                     console.log(`Failed to retarget PR #${pr.number}`, error);
                 }
             }
-            const { data: remainingPullsForBase } = await octokit.rest.pulls.list({
+            const { data: remainingPullsForBase } = await api.pulls.list({
                 owner,
                 repo,
                 base: branchName,
@@ -84,7 +85,7 @@ const run = async () => {
         }
         console.log("Proceeding to delete branch");
         try {
-            await octokit.git.deleteRef({
+            await api.git.deleteRef({
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,
                 ref: `heads/${branchName}`,

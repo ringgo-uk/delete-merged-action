@@ -9,6 +9,7 @@ const token =
 export const run = async () => {
   if (!token) throw new Error("GitHub token not found");
   const octokit = getOctokit(token);
+  const api = ((octokit as any).rest ?? octokit) as any;
 
   /**
    * This action will only work on `pull_request` events
@@ -24,7 +25,7 @@ export const run = async () => {
   const repo = context.repo.repo;
   const branchName = pullRequest.head.ref;
 
-  const { data: pullsForHead } = await octokit.rest.pulls.list({
+  const { data: pullsForHead } = await api.pulls.list({
     owner,
     repo,
     head: `${owner}:${branchName}`,
@@ -41,7 +42,7 @@ export const run = async () => {
   console.log("This branch is", branchName);
   const should = shouldMerge(branchName, getInput("branches"));
 
-  const pullRequestInfo = await octokit.pulls.get({
+  const pullRequestInfo = await api.pulls.get({
     owner: context.repo.owner,
     repo: context.repo.repo,
     pull_number: pullRequest.number,
@@ -60,7 +61,7 @@ export const run = async () => {
         `Retargeting any open PRs with base ${branchName} to ${retargetBase}`
       );
 
-      const { data: pullsForBase } = await octokit.rest.pulls.list({
+      const { data: pullsForBase } = await api.pulls.list({
         owner,
         repo,
         base: branchName,
@@ -69,7 +70,7 @@ export const run = async () => {
 
       for (const pr of pullsForBase) {
         try {
-          await octokit.rest.pulls.update({
+          await api.pulls.update({
             owner,
             repo,
             pull_number: pr.number,
@@ -83,7 +84,7 @@ export const run = async () => {
         }
       }
 
-      const { data: remainingPullsForBase } = await octokit.rest.pulls.list({
+      const { data: remainingPullsForBase } = await api.pulls.list({
         owner,
         repo,
         base: branchName,
@@ -99,7 +100,7 @@ export const run = async () => {
 
     console.log("Proceeding to delete branch");
     try {
-      await octokit.git.deleteRef({
+      await api.git.deleteRef({
         owner: context.repo.owner,
         repo: context.repo.repo,
         ref: `heads/${branchName}`,

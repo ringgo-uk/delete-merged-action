@@ -1,40 +1,40 @@
-import { shouldMerge, defaultValue } from "./util";
+import { shouldDelete, defaultValue } from "./util";
 
-describe("should merge default", () => {
+describe("should delete default", () => {
   test("example-branch", () => {
-    expect(shouldMerge("example-branch", defaultValue)).toBeTruthy();
+    expect(shouldDelete("example-branch", defaultValue)).toBeTruthy();
   });
   test("main", () => {
-    expect(shouldMerge("main", defaultValue)).toBeFalsy();
+    expect(shouldDelete("main", defaultValue)).toBeFalsy();
   });
   test("master", () => {
-    expect(shouldMerge("master", defaultValue)).toBeFalsy();
+    expect(shouldDelete("master", defaultValue)).toBeFalsy();
   });
 });
 
-describe("should merge with input", () => {
+describe("should delete with input", () => {
   test("example-branch", () => {
-    expect(shouldMerge("example-branch", "example-branch")).toBeTruthy();
+    expect(shouldDelete("example-branch", "example-branch")).toBeTruthy();
   });
   test("example-branch", () => {
-    expect(shouldMerge("example-branch-1", "example-branch")).toBeFalsy();
+    expect(shouldDelete("example-branch-1", "example-branch")).toBeFalsy();
   });
   test("example-*", () => {
-    expect(shouldMerge("example-branch", "example-*")).toBeTruthy();
+    expect(shouldDelete("example-branch", "example-*")).toBeTruthy();
   });
   test("example-*", () => {
-    expect(shouldMerge("example-branch-1", "example-*")).toBeTruthy();
+    expect(shouldDelete("example-branch-1", "example-*")).toBeTruthy();
   });
   test("example-*, hello-*", () => {
-    expect(shouldMerge("example-branch", "example-*")).toBeTruthy();
+    expect(shouldDelete("example-branch", "example-*")).toBeTruthy();
   });
   test("example-*, hello-*", () => {
-    expect(shouldMerge("hello-world", "example-*")).toBeFalsy();
+    expect(shouldDelete("hello-world", "example-*")).toBeFalsy();
   });
   test("example-*,hello-*", () => {
-    expect(shouldMerge("example-branch", "example-*")).toBeTruthy();
+    expect(shouldDelete("example-branch", "example-*")).toBeTruthy();
   });
   test("example-*,hello-*", () => {
-    expect(shouldMerge("hello-world", "example-*")).toBeFalsy();
+    expect(shouldDelete("hello-world", "example-*")).toBeFalsy();
   });
 });

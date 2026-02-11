@@ -6,8 +6,11 @@ inputs:
     required: false
     description: "List of branches to delete"
     default: "*,!master,!main"
+  retarget_base:
+    required: false
+    description: "If set, retarget any open PRs with base=<deleted branch> to this branch (e.g. develop) before deletion"
 runs:
-  using: "node12"
+  using: "node20"
   main: "dist/index.js"
 branding:
   icon: "trash"

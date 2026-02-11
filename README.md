@@ -16,6 +16,10 @@ You might not need this action, because GitHub natively supports deleting merged
 
 Glob rules for names of branches to delete, defaults to `!master, !develop`
 
+#### `retarget_base` (optional)
+
+If set, any open pull requests that have their base branch set to the branch being deleted will be retargeted to this branch (e.g. `develop`) before deletion.
+
 ### Environment variables
 
 #### `GITHUB_TOKEN` (required)
@@ -41,6 +45,7 @@ jobs:
         uses: ringgo_uk/delete-merged-action@master
         with:
           branches: "!master, !develop"
+          retarget_base: "develop"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```

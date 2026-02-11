@@ -1,6 +1,6 @@
 import { shouldDelete, defaultValue } from "./util";
 
-describe("should merge default", () => {
+describe("should delete default", () => {
   test("example-branch", () => {
     expect(shouldDelete("example-branch", defaultValue)).toBeTruthy();
   });
@@ -12,7 +12,7 @@ describe("should merge default", () => {
   });
 });
 
-describe("should merge with input", () => {
+describe("should delete with input", () => {
   test("example-branch", () => {
     expect(shouldDelete("example-branch", "example-branch")).toBeTruthy();
   });

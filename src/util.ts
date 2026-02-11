@@ -7,13 +7,14 @@ export const defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-export const shouldMerge = (branch: string, rules?: string) => {
+export const shouldDelete = (branch: string, rules?: string) => {
   console.log("Start: Debug should delete");
   const branches = (rules || "").split(",").map((branch) => branch.trim());
-  let shouldMerge = branches.every((rule) => {
+  let shouldDelete = branches.every((rule) => {
     console.log(branch, rule, minimatch(branch, rule));
     return minimatch(branch, rule);
   });
-  console.log("End: Debug should delete, result:", shouldMerge);
-  return shouldMerge;
+  console.log("End: Debug should delete, result:", shouldDelete);
+  return shouldDelete;
 };
+

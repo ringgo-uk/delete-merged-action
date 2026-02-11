@@ -38,7 +38,7 @@ const run = async () => {
     }
     console.log("Branches to delete are", (0, core_1.getInput)("branches"));
     console.log("This branch is", branchName);
-    const should = (0, util_1.shouldMerge)(branchName, (0, core_1.getInput)("branches"));
+    const should = (0, util_1.shouldDelete)(branchName, (0, core_1.getInput)("branches"));
     const pullRequestInfo = await api.pulls.get({
         owner: github_1.context.repo.owner,
         repo: github_1.context.repo.repo,
@@ -120,7 +120,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.shouldMerge = exports.defaultValue = void 0;
+exports.shouldDelete = exports.defaultValue = void 0;
 const minimatch_1 = __importDefault(__nccwpck_require__(3772));
 exports.defaultValue = "!master,!main,*";
 /**
@@ -128,17 +128,17 @@ exports.defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-const shouldMerge = (branch, rules) => {
+const shouldDelete = (branch, rules) => {
     console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
-    let shouldMerge = branches.every((rule) => {
+    let shouldDelete = branches.every((rule) => {
         console.log(branch, rule, (0, minimatch_1.default)(branch, rule));
         return (0, minimatch_1.default)(branch, rule);
     });
-    console.log("End: Debug should delete, result:", shouldMerge);
-    return shouldMerge;
+    console.log("End: Debug should delete, result:", shouldDelete);
+    return shouldDelete;
 };
-exports.shouldMerge = shouldMerge;
+exports.shouldDelete = shouldDelete;
 //# sourceMappingURL=util.js.map
 
 /***/ }),

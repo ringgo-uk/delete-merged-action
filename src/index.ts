@@ -1,7 +1,7 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { EventPayloads } from "@octokit/webhooks";
-import { shouldMerge } from "./util";
+import { shouldDelete } from "./util";
 
 const token =
   getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
@@ -40,7 +40,7 @@ export const run = async () => {
 
   console.log("Branches to delete are", getInput("branches"));
   console.log("This branch is", branchName);
-  const should = shouldMerge(branchName, getInput("branches"));
+  const should = shouldDelete(branchName, getInput("branches"));
 
   const pullRequestInfo = await api.pulls.get({
     owner: context.repo.owner,

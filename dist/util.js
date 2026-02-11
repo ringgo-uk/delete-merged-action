@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shouldMerge = exports.defaultValue = void 0;
+exports.shouldDelete = exports.defaultValue = void 0;
 const minimatch_1 = __importDefault(require("minimatch"));
 exports.defaultValue = "!master,!main,*";
 /**
@@ -11,15 +11,15 @@ exports.defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-const shouldMerge = (branch, rules) => {
+const shouldDelete = (branch, rules) => {
     console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
-    let shouldMerge = branches.every((rule) => {
+    let shouldDelete = branches.every((rule) => {
         console.log(branch, rule, (0, minimatch_1.default)(branch, rule));
         return (0, minimatch_1.default)(branch, rule);
     });
-    console.log("End: Debug should delete, result:", shouldMerge);
-    return shouldMerge;
+    console.log("End: Debug should delete, result:", shouldDelete);
+    return shouldDelete;
 };
-exports.shouldMerge = shouldMerge;
+exports.shouldDelete = shouldDelete;
 //# sourceMappingURL=util.js.map

@@ -1,0 +1,26 @@
+name: Update major version tag
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  update-major-tag:
+    name: Force-move floating vMAJOR tag
+    runs-on: generic-s
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TOKEN }}
+      - name: Move major tag
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF#refs/tags/}"
+          MAJOR="v${VERSION#v}"
+          MAJOR="${MAJOR%%.*}"
+          echo "Moving $MAJOR to $VERSION ($GITHUB_SHA)"
+          git tag -f "$MAJOR" "$GITHUB_SHA"
+          git push --force origin "refs/tags/$MAJOR"

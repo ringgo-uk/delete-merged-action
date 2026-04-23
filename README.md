@@ -42,7 +42,7 @@ jobs:
     runs-on: generic-s
     steps:
       - name: Delete merged branch
-        uses: ringgo_uk/delete-merged-action@master
+        uses: ringgo-uk/delete-merged-action@v3
         with:
           branches: "!master, !develop"
           retarget_base: "develop"

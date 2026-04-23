@@ -6,7 +6,7 @@ on:
 jobs:
   release:
     name: Build and publish
-    runs-on: generic-s
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - name: Checkout
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6.3.0
         with:
-          node-version: 14
+          node-version: 20
       - name: Cache node modules
         uses: actions/cache@v5
         env:
@@ -44,3 +44,8 @@ jobs:
           commit_user_name: Koj Bot
           commit_user_email: bot@koj.co
           commit_author: Koj Bot <bot@koj.co>
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release

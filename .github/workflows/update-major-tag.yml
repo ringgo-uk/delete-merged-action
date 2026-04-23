@@ -22,7 +22,5 @@ jobs:
           MAJOR="v${VERSION#v}"
           MAJOR="${MAJOR%%.*}"
           echo "Moving $MAJOR to $VERSION ($GITHUB_SHA)"
-          git config user.name "Koj Bot"
-          git config user.email "bot@koj.co"
           git tag -f "$MAJOR" "$GITHUB_SHA"
           git push --force origin "refs/tags/$MAJOR"

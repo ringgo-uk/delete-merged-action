@@ -1,6 +1,6 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { EventPayloads } from "@octokit/webhooks";
+import type { PullRequestEvent } from "@octokit/webhooks-types";
 import { shouldDelete } from "./util";
 
 const token =
@@ -14,10 +14,9 @@ export const run = async () => {
   /**
    * This action will only work on `pull_request` events
    */
-  const pullRequest = (context as any).payload
-    .pull_request as
-      | EventPayloads.WebhookPayloadPullRequestPullRequest
-      | undefined;
+  const pullRequest = context.payload.pull_request as
+    | PullRequestEvent["pull_request"]
+    | undefined;
 
   if (!pullRequest) return console.log("No pull request found");
 

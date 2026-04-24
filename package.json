@@ -31,7 +31,6 @@
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^30.0.0",
     "@octokit/webhooks-types": "^7.6.1",
-    "@types/minimatch": "^3.0.3",
     "@types/node": "^25.6.0",
     "@vercel/ncc": "^0.38.1",
     "jest": "^30.3.0",
@@ -44,6 +43,6 @@
     "@actions/core": "^3.0.0",
     "@actions/github": "^9.1.0",
     "@octokit/webhooks": "^14.2.0",
-    "minimatch": "^3.0.4"
+    "minimatch": "^10.2.5"
   }
 }

@@ -1,4 +1,4 @@
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
 export const defaultValue = "!master,!main,*";
 /**
  * Whether a branch should be deleted

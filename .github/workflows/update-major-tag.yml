@@ -6,7 +6,7 @@ on:
 jobs:
   update-major-tag:
     name: Force-move floating vMAJOR tag
-    runs-on: generic-s
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
